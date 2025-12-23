@@ -1,0 +1,13 @@
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://localhost:4000/api",
+  timeout: 5000,
+});
+
+export const fetchPositions = () => api.get("/positions").then(r => r.data);
+export const fetchTrades = () => api.get("/trades").then(r => r.data);
+export const placePaperTrade = (payload) =>
+  api.post("/trade", payload).then(r => r.data);
+
+export default api;

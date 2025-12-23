@@ -20,3 +20,15 @@ export async function predict(obs) {
     throw new Error(`Model request failed: ${msg}`);
   }
 }
+export async function predictFromCloses(closes, position = 0) {
+  try {
+    const res = await client.post('/predict_from_closes', { closes, position });
+    return res.data; // { action, latency_ms }
+  } catch (err) {
+    const resp = err.response;
+    const msg = resp
+      ? `${resp.status} ${resp.statusText} - ${JSON.stringify(resp.data)}`
+      : err.message;
+    throw new Error(`Model request (from_closes) failed: ${msg}`);
+  }
+}
